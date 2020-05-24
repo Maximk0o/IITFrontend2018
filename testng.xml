@@ -2,10 +2,15 @@
 
 <suite name="TaskLists" verbose="1" parallel="tests">
     <parameter name="browser" value="chrome" />
-    <parameter name="screen" value="1280x1024" />
-    <test name="Chrome" >
+    <parameter name="screen" value="1024x780" />
+    <test name="DataMos" >
         <classes>
-            <class name="com.example.tests.MainPageTest" />
+            <class name="com.example.tests.DataMosTest" />
+        </classes>
+    </test>
+    <test name="Google" >
+        <classes>
+            <class name="com.example.tests.GoogleTest" />
         </classes>
     </test>
 </suite>

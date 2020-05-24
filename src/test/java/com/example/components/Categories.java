@@ -5,20 +5,31 @@ import com.codeborne.selenide.ElementsContainer;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
 
-public class Categories extends ElementsContainer {
-    public Categories(SelenideElement el) {
+import java.util.function.Supplier;
+
+public class Categories<T extends ElementsContainer> extends ElementsContainer {
+    private Supplier<T> categoryItemConstructor;
+
+    public Categories(SelenideElement el, Supplier<T> categoryItemConstructor) {
+        this.categoryItemConstructor = categoryItemConstructor;
         setSelf(el);
     }
 
-    public CategoryItemMainPage getCategoryById(int id) {
-        CategoryItemMainPage categoryItem = new CategoryItemMainPage();
+    public T getCategoryById(int id) {
+        T categoryItem = categoryItemConstructor.get();
         categoryItem.setSelf(getSelf().find(String.format("[data-id=\"%d\"]", id)));
         return categoryItem;
     }
 
-    public CategoryItemMainPage getCategoryByName(String name) {
-        CategoryItemMainPage categoryItem = new CategoryItemMainPage();
-        categoryItem.setSelf(getSelf().find(By.xpath(String.format("//*[text()='%s']/../..", name))));
+    public T getCategoryByName(String name) {
+        T categoryItem = categoryItemConstructor.get();
+        categoryItem.setSelf(getSelf().find(By.xpath(String.format(".//*[text()='%s']/../..", name))));
+        return categoryItem;
+    }
+
+    public T getSelected() {
+        T categoryItem = categoryItemConstructor.get();
+        categoryItem.setSelf(getSelf().find(".selected"));
         return categoryItem;
     }
 

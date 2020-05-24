@@ -2,18 +2,28 @@ package com.example.tests;
 
 import com.codeborne.selenide.testng.annotations.Report;
 import com.example.BaseTest;
+import com.example.pages.DataPage;
 import com.example.steps.MainPageSteps;
 import com.example.steps.SearchPageSteps;
 import org.hamcrest.Matcher;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import static com.codeborne.selenide.Condition.text;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.startsWith;
 
 @Test
 @Report
-public class MainPageTest extends BaseTest {
+public class DataMosTest extends BaseTest {
+    // iit-235
+    @Test(groups = "regression")
+    public void dataPage()  {
+        DataPage page = new DataPage().navigate().shouldBeOpened();
+        page.select("Государственные услуги");
+        page.getSelectedItem().getTextElement().shouldHave(text("Государственные услуги"));
+        page.getSelectedItem().getCountElement().shouldHave(text("8"));
+    }
 
     @DataProvider(name = "search")
     public Object[][] createData1() {
@@ -25,10 +35,10 @@ public class MainPageTest extends BaseTest {
 
     // iit-234
     @Test(groups = "regression", dataProvider = "search")
-    public void search(String searchText, Matcher highlighted)  {
+    public void search(String searchText, Matcher<String> highlighted)  {
         MainPageSteps mainPageSteps = new MainPageSteps();
         mainPageSteps.openMainPage()
-                .checkSearchInputPlaceholder("Поиск по 929 наборам данных и материалам портала")
+                .checkSearchInputPlaceholder("Поиск по \\d+ наборам данных и материалам портала")
                 .searchFor(searchText);
 
         SearchPageSteps searchSteps = new SearchPageSteps();
@@ -41,5 +51,4 @@ public class MainPageTest extends BaseTest {
                 .checkSearchTypeSelected("По наборам данных")
                 .checkElementsHighlighted(highlighted);
     }
-
 }

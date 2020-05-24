@@ -18,7 +18,7 @@ public abstract class BaseTest {
         Configuration.timeout = 10000;
 
         System.setProperty("webdriver.chrome.driver", "src/test/resources/drivers/chromedriver.exe");
-        SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
+        SelenideLogger.addListener("AllureSelenide", new AllureSelenide().screenshots(true).savePageSource(false));
     }
 
     @BeforeSuite(alwaysRun = true)

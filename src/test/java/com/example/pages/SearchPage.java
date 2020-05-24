@@ -2,33 +2,27 @@ package com.example.pages;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import com.example.components.CategoryItemDataPage;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static com.example.constants.Constants.PAGE_LOAD_TIME;
 
-public class SearchPage extends AbstractPage {
+public class SearchPage extends AbstractPage<SearchPage> {
     public SearchPage() {
         super();
         this.url = "https://data.mos.ru/Search";
     }
 
-    public AbstractPage navigate() {
+    public SearchPage navigate() {
         return super.navigate(this.getClass());
     }
 
     @Override
-    public AbstractPage waitPageLoaded() {
-        $(".result-list").waitUntil(visible, 30000);
+    public SearchPage waitPageLoaded() {
+        $(".result-list").waitUntil(visible, PAGE_LOAD_TIME);
         return this;
-    }
-
-    public CategoryItemDataPage getSelectedItem() {
-        CategoryItemDataPage category = new CategoryItemDataPage();
-        category.setSelf($(".items-list .selected"));
-        return category;
     }
 
     public SelenideElement getSearchField() {

@@ -3,7 +3,7 @@ package com.example.steps;
 import com.codeborne.selenide.SelenideElement;
 import com.example.pages.MainPage;
 
-import static com.codeborne.selenide.Condition.attribute;
+import static com.codeborne.selenide.Condition.attributeMatching;
 
 public class MainPageSteps extends BaseSteps<MainPage> {
     public MainPageSteps() {
@@ -15,9 +15,9 @@ public class MainPageSteps extends BaseSteps<MainPage> {
         return this;
     }
 
-    public MainPageSteps checkSearchInputPlaceholder(String expectedPlaceholder) {
+    public MainPageSteps checkSearchInputPlaceholder(String expectedPlaceholderRegex) {
         SelenideElement searchField = page.getSearchField();
-        searchField.shouldHave(attribute("placeholder", expectedPlaceholder));
+        searchField.shouldHave(attributeMatching("placeholder", expectedPlaceholderRegex));
         return this;
     }
 

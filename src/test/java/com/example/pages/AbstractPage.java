@@ -5,7 +5,7 @@ import org.testng.Assert;
 
 import static com.codeborne.selenide.Selenide.open;
 
-public abstract class AbstractPage {
+public abstract class AbstractPage<T extends AbstractPage<T>> {
 
     protected String url;
 
@@ -23,18 +23,17 @@ public abstract class AbstractPage {
         return modifiedUri;
     }
 
-    public AbstractPage shouldBeOpened() {
+    public T shouldBeOpened() {
         waitPageLoaded();
         Assert.assertEquals(cleanseUri(WebDriverRunner.url()), cleanseUri(url));
-
-        return this;
+        return (T) this;
     }
 
-    public AbstractPage navigate(Class pageClass) {
-        return ((AbstractPage) open(url, pageClass)).waitPageLoaded();
+    public T navigate(Class<? extends T> pageClass) {
+        return open(url, pageClass).waitPageLoaded();
     }
 
     public String getUrl() { return url; }
 
-    public abstract AbstractPage waitPageLoaded();
+    public abstract T waitPageLoaded();
 }

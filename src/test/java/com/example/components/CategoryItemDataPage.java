@@ -15,4 +15,9 @@ public class CategoryItemDataPage extends ElementsContainer {
     public SelenideElement getCountElement() {
         return getSelf().find(".count");
     }
+
+    public CategoryItemDataPage select() {
+        getSelf().click();
+        return this;
+    }
 }
